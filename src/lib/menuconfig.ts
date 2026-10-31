@@ -68,16 +68,16 @@ interface MenuItem {
 
 /**
  * =====================================================================
- *  মেনু কাঠামো (সব প্রতিষ্ঠানের জন্য একই নিয়ম)
+ *  মেনু কাঠামো (বাংলাদেশের স্কুলের জন্য)
  * =====================================================================
  *  প্রতিটি role-এর মেনু একই ক্রমে সাজানো:
  *
  *   1. ড্যাশবোর্ড
- *   2. প্রতিষ্ঠান পরিচিতি      (প্রতিষ্ঠানের তথ্য, গঠনতন্ত্র, যোগাযোগ)
- *   3. একাডেমিক               (সেশন, শিক্ষার্থী, পরীক্ষা, ফলাফল)
- *   4. শিক্ষক ও কর্মী (HR)     (প্রোফাইল, দায়িত্ব, বেতন, হাজিরা)
+ *   2. প্রতিষ্ঠান পরিচিতি      (প্রধান শিক্ষক, ম্যানেজিং কমিটি, যোগাযোগ)
+ *   3. একাডেমিক               (শিক্ষাবর্ষ, শিক্ষার্থী, পরীক্ষা, ফলাফল)
+ *   4. শিক্ষক ও কর্মচারী (HR)  (প্রোফাইল, দায়িত্ব, বেতন, হাজিরা)
  *   5. অফিস একাউন্টিং          (ফি, আয়-ব্যয়, অনুদান, ইনভয়েস)
- *   6. আবাসিক ও সেবা বিভাগ    (বোর্ডিং, ক্যান্টিন, কেয়ার টেকার)
+ *   6. হোস্টেল ও সেবা বিভাগ   (বোর্ডিং, ক্যান্টিন, কেয়ার টেকার)
  *   7. ওয়েবসাইট ও ডকুমেন্টস
  *   8. যোগাযোগ (SMS)
  *   9. সিস্টেম / Settings
@@ -89,23 +89,23 @@ interface MenuItem {
 
 export const menus: Record<string, MenuItem[]> = {
   // =====================================================================
-  //  ADMIN  (শিক্ষা বিভাগ / একাডেমিক অফিস)
+  //  ADMIN  (একাডেমিক অফিস)
   // =====================================================================
   admin: [
     { name: "ড্যাশবোর্ড", icon: Home, href: "/admin" },
 
     // ---------- একাডেমিক ----------
     {
-      name: "সেশন ও শ্রেণি",
+      name: "শিক্ষাবর্ষ ও শ্রেণি",
       icon: CalendarClock,
       sub: [
-        { name: "নতুন সেশন", icon: CalendarDays, href: "/admin/session" },
+        { name: "নতুন শিক্ষাবর্ষ", icon: CalendarDays, href: "/admin/session" },
         {
           name: "নতুন শ্রেণি যোগ",
           icon: CalendarDays,
           href: "/admin/addclass",
         },
-        { name: "কিতাবসমূহ", icon: FileDown, href: "/admin/subjects" },
+        { name: "বিষয়সমূহ", icon: FileDown, href: "/admin/subjects" },
       ],
     },
     {
@@ -117,14 +117,14 @@ export const menus: Record<string, MenuItem[]> = {
           icon: UserPlus,
           href: "/admin/addstudent",
         },
-        { name: "ক্লাস ভর্তি", icon: NotebookPen, href: "/admin/admission" },
+        { name: "শ্রেণিতে ভর্তি", icon: NotebookPen, href: "/admin/admission" },
         {
           name: "সকল শিক্ষার্থী",
           icon: UserRoundSearch,
           href: "/admin/student",
         },
         {
-          name: "ক্লাসওয়ারী পেমেন্ট রিপোর্ট",
+          name: "শ্রেণিভিত্তিক ফি রিপোর্ট",
           icon: UserRoundSearch,
           href: "/admin/classledger",
         },
@@ -142,13 +142,13 @@ export const menus: Record<string, MenuItem[]> = {
           icon: BookOpen,
         },
         {
-          name: "পরীক্ষা ছাত্র রেজিষ্ট্রেশন",
+          name: "পরীক্ষার্থী নিবন্ধন",
           href: "/admin/examstudent",
           icon: BookOpen,
         },
-        { name: "এডমিট কার্ড", href: "/admin/admitcard", icon: BookOpen },
+        { name: "প্রবেশপত্র", href: "/admin/admitcard", icon: BookOpen },
         {
-          name: "পরীক্ষার সিট সিরিয়াল",
+          name: "পরীক্ষার আসন বিন্যাস",
           href: "/admin/examsitserial",
           icon: BookOpen,
         },
@@ -178,7 +178,7 @@ export const menus: Record<string, MenuItem[]> = {
       icon: Users,
       sub: [
         {
-          name: "নতুন শিক্ষক ভর্তি",
+          name: "নতুন শিক্ষক নিয়োগ",
           icon: UserPlus,
           href: "/admin/addteacher",
         },
@@ -188,7 +188,7 @@ export const menus: Record<string, MenuItem[]> = {
           href: "/admin/teacher",
         },
         {
-          name: "দায়িত্ব বন্টন",
+          name: "দায়িত্ব বণ্টন",
           icon: UserRoundSearch,
           href: "/admin/teacher/responsibilty",
         },
@@ -277,7 +277,7 @@ export const menus: Record<string, MenuItem[]> = {
           href: "/accountant/addstudent",
         },
         {
-          name: "ক্লাস ভর্তি",
+          name: "শ্রেণিতে ভর্তি",
           icon: NotebookPen,
           href: "/accountant/studentadmission",
         },
@@ -304,38 +304,38 @@ export const menus: Record<string, MenuItem[]> = {
           icon: List,
           sub: [
             {
-              name: "ফি এর ধরন",
+              name: "ফি-এর ধরন",
               href: "/accountant/payments/feecategory",
               icon: List,
             },
             {
-              name: "শ্রেণী ভিত্তিক ফি",
+              name: "শ্রেণিভিত্তিক ফি",
               href: "/accountant/payments/classfees",
               icon: GraduationCap,
             },
             {
-              name: "ছাত্র আলাদা ফি",
+              name: "শিক্ষার্থী আলাদা ফি",
               href: "/accountant/payments/studentfees",
               icon: UserCog,
             },
           ],
         },
         {
-          name: "বেতন তৈরি ও আদায়",
+          name: "ফি তৈরি ও আদায়",
           icon: CreditCard,
           sub: [
             {
-              name: "বেতন তৈরী",
+              name: "ফি তৈরি",
               href: "/accountant/payments/payment",
               icon: FilePlus,
             },
             {
-              name: "এক্সট্রা ফি যুক্ত",
+              name: "অতিরিক্ত ফি যুক্ত",
               href: "/accountant/payments/addextrafee",
               icon: FilePlus,
             },
             {
-              name: "শিক্ষার্থী বেতন জমা",
+              name: "শিক্ষার্থী ফি জমা",
               icon: CalendarRange,
               href: "/accountant/accounts/payments/mutiplemonthcash",
             },
@@ -356,7 +356,7 @@ export const menus: Record<string, MenuItem[]> = {
               href: "/accountant/payments/paidpayments",
             },
             {
-              name: "ক্লাসওয়ারী রিপোর্ট",
+              name: "শ্রেণিভিত্তিক রিপোর্ট",
               icon: GraduationCap,
               href: "/accountant/classledger",
             },
@@ -502,7 +502,7 @@ export const menus: Record<string, MenuItem[]> = {
           href: "/accountant/betnsheet",
         },
         {
-          name: "নূরানী বেতন শিট",
+          name: "প্রাথমিক শাখা বেতন শিট",
           icon: FileText,
           href: "/accountant/nuranibetnsheet",
         },
@@ -551,11 +551,11 @@ export const menus: Record<string, MenuItem[]> = {
 
     // ---------- ক্লাস সংক্রান্ত ----------
     {
-      name: "শিক্ষার্থী ও ক্লাস",
+      name: "শিক্ষার্থী ও শ্রেণি",
       icon: Users,
       sub: [
         {
-          name: "ক্লাস ওয়ারী পেমেন্ট",
+          name: "শ্রেণিভিত্তিক ফি",
           icon: CreditCard,
           href: "/teacher/classledger",
         },
@@ -569,7 +569,7 @@ export const menus: Record<string, MenuItem[]> = {
 
     // ---------- নিজের ছুটি ----------
     {
-      name: "ছুটি/ছাটা",
+      name: "ছুটি",
       icon: CalendarClock,
       sub: [
         {
@@ -608,7 +608,7 @@ export const menus: Record<string, MenuItem[]> = {
     { name: "ড্যাশবোর্ড", icon: Home, href: "/studentdashboard" },
     { name: "ফলাফল", icon: BookOpen, href: "/studentdashboard/result" },
     {
-      name: "পেমেন্ট তথ্য",
+      name: "ফি ও পেমেন্ট তথ্য",
       icon: CreditCard,
       href: "/studentdashboard/mypayments",
     },
@@ -635,7 +635,7 @@ export const menus: Record<string, MenuItem[]> = {
     // TODO: ড্যাশবোর্ড লিঙ্ক student-এর দিকে যাচ্ছে, "/donordashboard" হবে কি?
     { name: "ড্যাশবোর্ড", icon: Home, href: "/studentdashboard" },
     {
-      name: "পেমেন্ট তথ্য",
+      name: "অনুদানের তথ্য",
       icon: CreditCard,
       href: "/donordashboard/mypayments",
     },
@@ -656,7 +656,7 @@ export const menus: Record<string, MenuItem[]> = {
   ],
 
   // =====================================================================
-  //  SUPER ADMIN  (প্রধান / মোহতামীম — সম্পূর্ণ নিয়ন্ত্রণ)
+  //  SUPER ADMIN  (প্রধান শিক্ষক / অধ্যক্ষ — সম্পূর্ণ নিয়ন্ত্রণ)
   // =====================================================================
   super_admin: [
     { name: "ড্যাশবোর্ড", icon: Home, href: "/superadmin" },
@@ -666,7 +666,7 @@ export const menus: Record<string, MenuItem[]> = {
     //    TODO: পেজ তৈরি হলে নিচের "/superadmin" বদলে আসল route দিন
     // =====================================================
     {
-      name: "মোহতামীম প্রোফাইল",
+      name: "প্রধান শিক্ষক প্রোফাইল",
       icon: Home,
       sub: [
         {
@@ -674,41 +674,45 @@ export const menus: Record<string, MenuItem[]> = {
           icon: Stamp,
           sub: [
             {
-              name: "প্রাতিষ্ঠানিক গঠনতন্ত্র",
+              name: "প্রতিষ্ঠানের নীতিমালা",
               icon: BookText,
               href: "/superadmin",
             },
-            { name: "মজলিসে শুরা", icon: Users, href: "/superadmin" },
-            { name: "মজলিসে আমেলা", icon: Users, href: "/superadmin" },
+            { name: "পরিচালনা পর্ষদ", icon: Users, href: "/superadmin" },
+            { name: "ম্যানেজিং কমিটি", icon: Users, href: "/superadmin" },
             {
-              name: "উপজেলা নির্বাহী পরিচিতি",
+              name: "উপজেলা প্রশাসন পরিচিতি",
               icon: Users,
               href: "/superadmin",
             },
             {
-              name: "প্রশাসন থানা পরিচিতি",
+              name: "থানা ও পুলিশ প্রশাসন পরিচিতি",
               icon: Users,
               href: "/superadmin",
             },
           ],
         },
         {
-          name: "দাতা ও সহযোগী ডাটা",
+          name: "দাতা ও শুভানুধ্যায়ী তথ্য",
           icon: HeartHandshake,
           sub: [
             {
-              name: "সহযোগী দায়ী ডাটা",
-              icon: UserRound,
-              href: "/superadmin",
-            },
-            { name: "নওমুসলিম ডাটা", icon: UserRound, href: "/superadmin" },
-            {
-              name: "চাকুরীজীবী অভিভাবক",
+              name: "সহযোগী ব্যক্তি তথ্য",
               icon: UserRound,
               href: "/superadmin",
             },
             {
-              name: "রাজনৈতিক অভিভাবক",
+              name: "প্রাক্তন শিক্ষার্থী তথ্য",
+              icon: UserRound,
+              href: "/superadmin",
+            },
+            {
+              name: "চাকরিজীবী অভিভাবক",
+              icon: UserRound,
+              href: "/superadmin",
+            },
+            {
+              name: "জনপ্রতিনিধি অভিভাবক",
               icon: UserRound,
               href: "/superadmin",
             },
@@ -718,7 +722,7 @@ export const menus: Record<string, MenuItem[]> = {
               href: "/superadmin",
             },
             {
-              name: "নোয়াফিক এলাকাবাসী",
+              name: "স্থানীয় এলাকাবাসী",
               icon: UserRound,
               href: "/superadmin",
             },
@@ -738,19 +742,19 @@ export const menus: Record<string, MenuItem[]> = {
     },
 
     // =====================================================
-    // ২. একাডেমিক (নাযেমে তালিমাত)
-    //    সেশন → শিক্ষার্থী → পরীক্ষা → ফলাফল
+    // ২. একাডেমিক বিভাগ
+    //    শিক্ষাবর্ষ → শিক্ষার্থী → পরীক্ষা → ফলাফল
     // =====================================================
     {
-      name: "নাযেমে তালিমাত",
+      name: "একাডেমিক বিভাগ",
       icon: User2Icon,
       sub: [
         {
-          name: "সেশন ও শ্রেণি",
+          name: "শিক্ষাবর্ষ ও শ্রেণি",
           icon: CalendarClock,
           sub: [
             {
-              name: "নতুন সেশন",
+              name: "নতুন শিক্ষাবর্ষ",
               icon: CalendarDays,
               href: "/superadmin/admin/session",
             },
@@ -760,7 +764,7 @@ export const menus: Record<string, MenuItem[]> = {
               href: "/superadmin/admin/addclass",
             },
             {
-              name: "কিতাবসমূহ",
+              name: "বিষয়সমূহ",
               icon: Library,
               href: "/superadmin/admin/subjects",
             },
@@ -776,7 +780,7 @@ export const menus: Record<string, MenuItem[]> = {
               href: "/superadmin/admin/addstudent",
             },
             {
-              name: "ক্লাস ভর্তি",
+              name: "শ্রেণিতে ভর্তি",
               icon: NotebookPen,
               href: "/superadmin/admin/admission",
             },
@@ -807,12 +811,12 @@ export const menus: Record<string, MenuItem[]> = {
               icon: Library,
             },
             {
-              name: "পরীক্ষা ছাত্র রেজিষ্ট্রেশন",
+              name: "পরীক্ষার্থী নিবন্ধন",
               href: "/superadmin/admin/examstudent",
               icon: ClipboardList,
             },
             {
-              name: "এডমিট কার্ড",
+              name: "প্রবেশপত্র",
               href: "/superadmin/admin/admitcard",
               icon: IdCard,
             },
@@ -833,7 +837,7 @@ export const menus: Record<string, MenuItem[]> = {
               icon: FileBarChart,
             },
             {
-              name: "ফলাফল রিপোর্ট",
+              name: "শ্রেণিভিত্তিক মার্কশিট",
               href: "/superadmin/admin/classwarymarksheet",
               icon: FileText,
             },
@@ -843,7 +847,7 @@ export const menus: Record<string, MenuItem[]> = {
     },
 
     // =====================================================
-    // ৩. শিক্ষক ও কর্মী (HR)
+    // ৩. শিক্ষক ও কর্মচারী (HR)
     //    প্রোফাইল → দায়িত্ব → বেতন → হাজিরা/ছুটি
     // =====================================================
     {
@@ -922,28 +926,28 @@ export const menus: Record<string, MenuItem[]> = {
           sub: [
             // ফি সেটআপ
             {
-              name: "ফি এর ধরন",
+              name: "ফি-এর ধরন",
               href: "/superadmin/accountant/payments/feecategory",
               icon: List,
             },
             {
-              name: "শ্রেণী ভিত্তিক ফি",
+              name: "শ্রেণিভিত্তিক ফি",
               href: "/superadmin/accountant/payments/classfees",
               icon: GraduationCap,
             },
             {
-              name: "ছাত্র আলাদা ফি",
+              name: "শিক্ষার্থী আলাদা ফি",
               href: "/superadmin/accountant/payments/studentfees",
               icon: UserCog,
             },
-            // বেতন তৈরি ও আদায়
+            // ফি তৈরি ও আদায়
             {
-              name: "বেতন তৈরী",
+              name: "ফি তৈরি",
               href: "/superadmin/accountant/payments/payment",
               icon: FilePlus,
             },
             {
-              name: "এক্সট্রা ফি যুক্ত",
+              name: "অতিরিক্ত ফি যুক্ত",
               href: "/superadmin/accountant/addextrafee",
               icon: FilePlus,
             },
@@ -964,7 +968,7 @@ export const menus: Record<string, MenuItem[]> = {
               icon: BarChart3,
             },
             {
-              name: "ক্লাসভিত্তিক রিপোর্ট",
+              name: "শ্রেণিভিত্তিক রিপোর্ট",
               href: "/superadmin/admin/classledger",
               icon: GraduationCap,
             },
@@ -1087,23 +1091,23 @@ export const menus: Record<string, MenuItem[]> = {
     },
 
     // =====================================================
-    // ৫. আবাসিক ও সেবা বিভাগ (পেজ তৈরি হচ্ছে)
+    // ৫. হোস্টেল ও সেবা বিভাগ (পেজ তৈরি হচ্ছে)
     // =====================================================
     {
-      name: "আবাসিক ও সেবা",
+      name: "হোস্টেল ও সেবা",
       icon: Presentation,
       sub: [
         {
-          name: "নাযেমে দারুল ইকামাহ",
+          name: "হোস্টেল সুপার",
           icon: Stamp,
         },
         {
-          name: "বোর্ডিং ডিপার্টমেন্ট",
+          name: "বোর্ডিং বিভাগ",
           icon: Presentation,
           sub: [
-            { name: "সকল বোর্ডিং সদস্য", icon: Users },
-            { name: "বোর্ডিং খানার হিসাব", icon: Wallet },
-            { name: "বোর্ডিং খানার হাজিরা", icon: ClipboardList },
+            { name: "সকল আবাসিক শিক্ষার্থী", icon: Users },
+            { name: "বোর্ডিং খাবারের হিসাব", icon: Wallet },
+            { name: "বোর্ডিং খাবারের হাজিরা", icon: ClipboardList },
           ],
         },
         { name: "কেয়ার টেকার", icon: Brush },
@@ -1112,7 +1116,7 @@ export const menus: Record<string, MenuItem[]> = {
     },
 
     // =====================================================
-    // ৬. ডিজিটাল হাজিরা (শিক্ষক ও কর্মীর উপস্থিতি/ছুটি)
+    // ৬. ডিজিটাল হাজিরা (শিক্ষক ও কর্মচারীর উপস্থিতি/ছুটি)
     // =====================================================
     {
       name: "ডিজিটাল হাজিরা",
@@ -1178,7 +1182,7 @@ export const menus: Record<string, MenuItem[]> = {
             {
               // শিক্ষক প্রোফাইল থেকে সরানো হয়েছে
               // TODO: route আলাদা করুন (এখন responsibilitydashboard)
-              name: "ছুটি / ছাটা",
+              name: "ছুটি",
               href: "/superadmin/teacher/responsibilitydashboard",
               icon: CalendarDays,
             },
@@ -1236,7 +1240,7 @@ export const menus: Record<string, MenuItem[]> = {
           href: "/superadmin/accountant/betnsheet",
         },
         {
-          name: "নূরানী বেতন শিট",
+          name: "প্রাথমিক শাখা বেতন শিট",
           icon: FileText,
           href: "/superadmin/accountant/nuranibetnsheet",
         },
@@ -1264,10 +1268,10 @@ export const menus: Record<string, MenuItem[]> = {
     },
 
     // =====================================================
-    // ৯. অন্যান্য প্রতিষ্ঠান/ব্যবসা
+    // ৯. অন্যান্য ব্যবস্থাপনা
     // =====================================================
     {
-      name: "তিজারাহ পয়েন্ট",
+      name: "ঋণ ব্যবস্থাপনা",
       icon: DollarSignIcon,
       href: "/superadmin/borrower/allborrower",
     },
