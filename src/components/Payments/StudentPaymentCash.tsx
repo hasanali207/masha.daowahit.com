@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { SolaimanLipiBase64 } from "@/fonts/solaiman";
+import { useAcademicInfo } from "@/lib/useAcademicInfo";
 import { numberToBanglaWords } from "@/types/numberToBanglaWords ";
 import { formatBanglaDateTime } from "@/utils/dateBn";
 import axios from "axios";
@@ -59,6 +60,12 @@ export default function StudentPaymentCash() {
     {},
   );
   const [loading, setLoading] = useState(false);
+  const { info } = useAcademicInfo();
+  const anyInfo = (info ?? {}) as Record<string, any>;
+  const instituteName = anyInfo.name || "ইসলামী দাওয়াহ ইনস্টিটিউট";
+  const address = anyInfo.address || "তুষভান্ডার, কালীগঞ্জ, লালমনিরহাট";
+  const phone = anyInfo.phone || "+880-1723-220778";
+  const secondaryPhone = anyInfo.secondaryPhone || "";
 
   const [images, setImages] = useState({
     logo: "",
@@ -360,18 +367,18 @@ export default function StudentPaymentCash() {
             {
               stack: [
                 {
-                  text: "ইসলামী দাওয়াহ ইনস্টিটিউট, তুষভান্ডার",
+                  text: ` ${instituteName}`,
                   style: "title",
                   alignment: "center",
                 },
                 {
-                  text: "মাষ্টারপাড়া, তুষভান্ডার, কালিগঞ্জ, লালমনিরহাট",
+                  text: `${address}`,
                   style: "subtitle",
                   alignment: "center",
                   margin: [0, 0, 0, 0],
                 },
                 {
-                  text: "মোবাইল নং ০১৭২৩-২২০৭৭৮, ০১৭১৭৫১১৭৬০",
+                  text: `মোবাইল নং ${phone}, ${secondaryPhone}`,
                   style: "subtitle",
                   alignment: "center",
                   margin: [0, 0, 0, 0],
@@ -631,94 +638,92 @@ export default function StudentPaymentCash() {
         </div>
       )}
 
-      
-        {/* Payments */}
-        {payments.length === 0 ? (
-          selectedStudent ? (
-            <p>এই শিক্ষার্থীর জন্য কোন পেমেন্ট পাওয়া যায়নি।</p>
-          ) : (
-            <p>শিক্ষার্থী খুঁজুন পেমেন্ট দেখতে।</p>
-          )
+      {/* Payments */}
+      {payments.length === 0 ? (
+        selectedStudent ? (
+          <p>এই শিক্ষার্থীর জন্য কোন পেমেন্ট পাওয়া যায়নি।</p>
         ) : (
-          <div className="grid lg:grid-cols-3 md:grid-cols-1 grid-cols-1 gap-5">
-            {payments.map((payment) => (
-              <Card
-                key={payment.id}
-                className="rounded-xl shadow hover:shadow-lg"
-              >
-                <CardContent className="p-4">
-                  <div className="flex justify-between mb-2">
-                    <strong>
-                      {payment.month} / {payment.year}
-                    </strong>
-                    <span
-                      className={`font-bold ${
-                        payment.status === "PAID"
-                          ? "text-green-600"
-                          : payment.status === "PARTIAL"
-                            ? "text-yellow-600"
-                            : "text-red-600"
-                      }`}
+          <p>শিক্ষার্থী খুঁজুন পেমেন্ট দেখতে।</p>
+        )
+      ) : (
+        <div className="grid lg:grid-cols-3 md:grid-cols-1 grid-cols-1 gap-5">
+          {payments.map((payment) => (
+            <Card
+              key={payment.id}
+              className="rounded-xl shadow hover:shadow-lg"
+            >
+              <CardContent className="p-4">
+                <div className="flex justify-between mb-2">
+                  <strong>
+                    {payment.month} / {payment.year}
+                  </strong>
+                  <span
+                    className={`font-bold ${
+                      payment.status === "PAID"
+                        ? "text-green-600"
+                        : payment.status === "PARTIAL"
+                          ? "text-yellow-600"
+                          : "text-red-600"
+                    }`}
+                  >
+                    {payment.status}
+                  </span>
+                </div>
+
+                <div className="space-y-1 mb-2 flex justify-between items-center flex-wrap gap-5">
+                  {payment.items.map((item) => (
+                    <div
+                      key={item.id}
+                      className="flex justify-between items-center flex-wrap p-2 border rounded gap-5"
                     >
-                      {payment.status}
-                    </span>
-                  </div>
-
-                  <div className="space-y-1 mb-2 flex justify-between items-center flex-wrap gap-5">
-                    {payment.items.map((item) => (
-                      <div
-                        key={item.id}
-                        className="flex justify-between items-center flex-wrap p-2 border rounded gap-5"
-                      >
-                        <div className="">
-                          {item.feeCategory.name} - ৳:{item.amount.toFixed(0)}
-                          {item.status === "PAID" && (
-                            <span className="text-green-600 ml-2">PAID</span>
-                          )}
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                          {item.status !== "PAID" && (
-                            <input
-                              type="checkbox"
-                              checked={
-                                selectedFees[payment.id]?.includes(
-                                  item.feeCategoryId,
-                                ) || false
-                              }
-                              onChange={() =>
-                                toggleFee(payment.id, item.feeCategoryId)
-                              }
-                            />
-                          )}
-                        </div>
+                      <div className="">
+                        {item.feeCategory.name} - ৳:{item.amount.toFixed(0)}
+                        {item.status === "PAID" && (
+                          <span className="text-green-600 ml-2">PAID</span>
+                        )}
                       </div>
-                    ))}
-                  </div>
 
-                  <div className="flex justify-between items-center gap-5">
-                    <Button
-                      onClick={() => handlePayCash(payment.id)}
-                      className="cursor-pointer"
-                      disabled={loading}
-                    >
-                      Pay Cash
-                    </Button>
+                      <div className="flex items-center gap-2">
+                        {item.status !== "PAID" && (
+                          <input
+                            type="checkbox"
+                            checked={
+                              selectedFees[payment.id]?.includes(
+                                item.feeCategoryId,
+                              ) || false
+                            }
+                            onChange={() =>
+                              toggleFee(payment.id, item.feeCategoryId)
+                            }
+                          />
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
 
-                    <Button
-                      onClick={() => generateMonthlyInvoiceWithDue(payment)}
-                      disabled={payment.items.every((i) => i.status !== "PAID")}
-                      className="bg-gray-300 text-black hover:text-white cursor-pointer"
-                    >
-                      <Printer className="w-4 h-4 mr-1" /> Full Invoice
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        )}
-      
+                <div className="flex justify-between items-center gap-5">
+                  <Button
+                    onClick={() => handlePayCash(payment.id)}
+                    className="cursor-pointer"
+                    disabled={loading}
+                  >
+                    Pay Cash
+                  </Button>
+
+                  <Button
+                    onClick={() => generateMonthlyInvoiceWithDue(payment)}
+                    disabled={payment.items.every((i) => i.status !== "PAID")}
+                    className="bg-gray-300 text-black hover:text-white cursor-pointer"
+                  >
+                    <Printer className="w-4 h-4 mr-1" /> Full Invoice
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SolaimanLipiBase64 } from "@/fonts/solaiman";
+import { useAcademicInfo } from "@/lib/useAcademicInfo";
 import { TDocumentDefinitions } from "pdfmake/interfaces";
 import { useEffect, useState } from "react";
 
@@ -46,6 +47,12 @@ export default function DownloadStudent() {
   const [sessions, setSessions] = useState<ISession[]>([]);
   const [classes, setClasses] = useState<{ name: string; id: string }[]>([]);
   const [meta, setMeta] = useState({ page: 1, limit: 60, total: 0 });
+  const { info } = useAcademicInfo();
+  const anyInfo = (info ?? {}) as Record<string, any>;
+  const instituteName = anyInfo.name || "ইসলামী দাওয়াহ ইনস্টিটিউট";
+  const address = anyInfo.address || "তুষভান্ডার, কালীগঞ্জ, লালমনিরহাট";
+  const phone = anyInfo.phone || "+880-1723-220778";
+  const secondaryPhone = anyInfo.secondaryPhone || "";
 
   const [filters, setFilters] = useState<Record<string, any>>({
     searchTerm: "",
@@ -308,12 +315,12 @@ export default function DownloadStudent() {
       header: {
         stack: [
           {
-            text: "ইসলামী দাওয়াহ ইনিস্টিটিউট, তুষভান্ডার",
+            text: instituteName,
             style: "title",
             alignment: "center",
           },
           {
-            text: "মাষ্টারপাড়া, তুষভান্ডার, কালীগঞ্জ, লালমনিরহাট",
+            text: address,
             style: "subtitle",
             alignment: "center",
           },

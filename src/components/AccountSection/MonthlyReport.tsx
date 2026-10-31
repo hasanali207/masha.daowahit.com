@@ -2,6 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import api from "@/lib/axios";
+import { useAcademicInfo } from "@/lib/useAcademicInfo";
 import { toBanglaNumber } from "@/utils/toBanglaNumber";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -153,7 +154,12 @@ export default function MonthlyReportTabs() {
   const [loading, setLoading] = useState(false);
 
   const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
+  const { info } = useAcademicInfo();
+  const anyInfo = (info ?? {}) as Record<string, any>;
+  const instituteName = anyInfo.name || "ইসলামী দাওয়াহ ইনস্টিটিউট";
+  const address = anyInfo.address || "তুষভান্ডার, কালীগঞ্জ, লালমনিরহাট";
+  const phone = anyInfo.phone || "+880-1723-220778";
+  const secondaryPhone = anyInfo.secondaryPhone || "";
   // =========================
   // FETCH
   // =========================
@@ -297,11 +303,9 @@ export default function MonthlyReportTabs() {
           <div className="flex items-start justify-between gap-4 flex-wrap mb-4">
             {/* Institute name (left) */}
             <div className="flex-1 text-center">
-              <h1 className="text-2xl bangla">
-                ইসলামী দাওয়াহ ইনস্টিটিউট, তুষভান্ডার।
-              </h1>
+              <h1 className="text-2xl bangla"> {instituteName}</h1>
               <p className="text-xl bangla">
-                মাষ্টারপাড়া, তুষভান্ডার, কালিগঞ্জ, লালমনিরহাট।
+                {address || "মাষ্টারপাড়া, তুষভান্ডার, কালিগঞ্জ, লালমনিরহাট।"}
               </p>
             </div>
 

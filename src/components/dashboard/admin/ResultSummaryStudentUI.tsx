@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SolaimanLipiBase64 } from "@/fonts/solaiman";
+import { useAcademicInfo } from "@/lib/useAcademicInfo";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -107,6 +108,13 @@ export default function SingleStudentResult() {
   // ── Result state ─────────────────────────────────────
   const [marksheet, setMarksheet] = useState<Marksheet | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const { info } = useAcademicInfo();
+  const anyInfo = (info ?? {}) as Record<string, any>;
+  const instituteName = anyInfo.name || "ইসলামী দাওয়াহ ইনস্টিটিউট";
+  const address = anyInfo.address || "তুষভান্ডার, কালীগঞ্জ, লালমনিরহাট";
+  const phone = anyInfo.phone || "+880-1723-220778";
+  const secondaryPhone = anyInfo.secondaryPhone || "";
 
   // ── Images for PDF ───────────────────────────────────
   const [images, setImages] = useState({
@@ -315,19 +323,19 @@ export default function SingleStudentResult() {
               width: "*",
               stack: [
                 {
-                  text: "ইসলামী দাওয়াহ্ ইনস্টিটিউট, লালমনিরহাট",
+                  text: instituteName,
                   alignment: "center",
                   fontSize: 20,
                   bold: true,
                 },
                 {
-                  text: "মাষ্টারপাড়া, তুষভান্ডার, কালীগঞ্জ, লালমনিরহাট",
+                  text: address,
                   alignment: "center",
                   fontSize: 13,
                   margin: [0, 4, 0, 0],
                 },
                 {
-                  text: "মোবাইল নং ০১৭২৩-২২০৭৭৮, ০১৭১৭৫১১৭৬০",
+                  text: `মোবাইল নং ${phone}, ${secondaryPhone}`,
                   alignment: "center",
                   margin: [0, 0, 0, 0],
                 },

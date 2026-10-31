@@ -4,6 +4,7 @@ import { SolaimanLipiBase64 } from "@/fonts/solaiman";
 import api from "@/lib/axios";
 import { getPagination } from "@/lib/getPageNumber";
 import socket from "@/lib/socket";
+import { useAcademicInfo } from "@/lib/useAcademicInfo";
 import { fmtTime, formatDateBn } from "@/utils/dateBn";
 import {
   ArrowLeft,
@@ -158,6 +159,13 @@ export default function AttendanceDashboard({
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const pages = getPagination(page, totalPages);
+
+  const { info } = useAcademicInfo();
+  const anyInfo = (info ?? {}) as Record<string, any>;
+  const instituteName = anyInfo.name || "ইসলামী দাওয়াহ ইনস্টিটিউট";
+  const address = anyInfo.address || "তুষভান্ডার, কালীগঞ্জ, লালমনিরহাট";
+  const phone = anyInfo.phone || "+880-1723-220778";
+  const secondaryPhone = anyInfo.secondaryPhone || "";
 
   // ===== Filter helpers (every filter change resets to page 1) =====
   const updateFilters = (updater: (prev: FilterState) => FilterState) => {
@@ -431,12 +439,12 @@ export default function AttendanceDashboard({
     const docDefinition: any = {
       content: [
         {
-          text: "ইসলামী দাওয়াহ্ ইনস্টিটিউট, তুষভান্ডার।",
+          text: instituteName,
           style: "orgName",
           alignment: "center",
         },
         {
-          text: "মাষ্টারপাড়া, তুষভান্ডার, কালিগঞ্জ, লালমনিরহাট।",
+          text: address,
           style: "orgAddress",
           alignment: "center",
           margin: [0, 0, 0, 10],

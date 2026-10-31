@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SolaimanLipiBase64 } from "@/fonts/solaiman";
+import { useAcademicInfo } from "@/lib/useAcademicInfo";
 import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import {
@@ -78,6 +79,13 @@ export default function ResultSummaryFull() {
 
   const isAnyLoading =
     loadingGenerate || loadingShow || loadingPDF || loadingExcel;
+
+  const { info } = useAcademicInfo();
+  const anyInfo = (info ?? {}) as Record<string, any>;
+  const instituteName = anyInfo.name || "ইসলামী দাওয়াহ ইনস্টিটিউট";
+  const address = anyInfo.address || "তুষভান্ডার, কালীগঞ্জ, লালমনিরহাট";
+  const phone = anyInfo.phone || "+880-1723-220778";
+  const secondaryPhone = anyInfo.secondaryPhone || "";
 
   const [images, setImages] = useState({
     logo: "",
@@ -351,17 +359,17 @@ export default function ResultSummaryFull() {
               {
                 stack: [
                   {
-                    text: "ইসলামী দাওয়াহ ইনস্টিটিউট, তুষভান্ডার",
+                    text: instituteName,
                     style: "header",
                     alignment: "center",
                   },
                   {
-                    text: "মাষ্টারপাড়া, তুষভান্ডার, কালীগঞ্জ, লালমনিরহাট",
+                    text: address,
                     style: "subtitle",
                     alignment: "center",
                   },
                   {
-                    text: "মোবাইল নং ০১৭২৩-২২০৭৭৮, ০১৭১৭৫১১৭৬০",
+                    text: `মোবাইল নং ${phone}, ${secondaryPhone}`,
                     alignment: "center",
                   },
                 ],

@@ -2,6 +2,7 @@
 
 import { SolaimanLipiBase64 } from "@/fonts/solaiman";
 import api from "@/lib/axios";
+import { useAcademicInfo } from "@/lib/useAcademicInfo";
 import { formatDateBn } from "@/utils/dateBn";
 import { DownloadIcon } from "lucide-react";
 import { useState } from "react";
@@ -17,7 +18,14 @@ export default function AccountReports() {
 
   const [report, setReport] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const { info } = useAcademicInfo();
 
+  const anyInfo = (info ?? {}) as Record<string, any>;
+
+  const instituteName = anyInfo.name || "ইসলামী দাওয়াহ ইনস্টিটিউট";
+  const address = anyInfo.address || "তুষভান্ডার, কালীগঞ্জ, লালমনিরহাট";
+  const phone = anyInfo.phone || "+880-1723-220778";
+  const secondaryPhone = anyInfo.secondaryPhone || "";
   /* ================= FETCH REPORT ================= */
   const fetchReport = async () => {
     try {
@@ -81,12 +89,12 @@ export default function AccountReports() {
       content: [
         // ===== HEADER =====
         {
-          text: "ইসলামী দাওয়াহ্ ইনস্টিটিউট, তুষভান্ডার।", // Change to your org name
+          text: instituteName, // Change to your org name
           style: "orgName",
           alignment: "center",
         },
         {
-          text: "মাষ্টারপাড়া, তুষভান্ডার, কালিগঞ্জ, লালমনিরহাট।", // Address
+          text: address, // Address
           style: "orgAddress",
           alignment: "center",
           margin: [0, 0, 0, 10],

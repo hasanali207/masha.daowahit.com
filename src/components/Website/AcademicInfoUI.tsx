@@ -640,7 +640,7 @@ export default function AcademicInfoUI() {
   const logoPreview = getPreview("logo");
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="max-w-6xl mx-auto space-y-6">
       {/* LIVE HEADER PREVIEW */}
       <div className={`${cardClass} overflow-hidden`}>
         <div className="relative h-40 bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-700 sm:h-52">

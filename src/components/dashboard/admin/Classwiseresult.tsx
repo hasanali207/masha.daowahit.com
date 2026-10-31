@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SolaimanLipiBase64 } from "@/fonts/solaiman";
+import { useAcademicInfo } from "@/lib/useAcademicInfo";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -106,6 +107,12 @@ async function buildMarksheetCard(
   opts: { pageBreak?: boolean } = {},
 ): Promise<any> {
   const { student, exam, subjectResults, summary } = marksheet;
+  const { info } = useAcademicInfo();
+  const anyInfo = (info ?? {}) as Record<string, any>;
+  const instituteName = anyInfo.name || "ইসলামী দাওয়াহ ইনস্টিটিউট";
+  const address = anyInfo.address || "তুষভান্ডার, কালীগঞ্জ, লালমনিরহাট";
+  const phone = anyInfo.phone || "+880-1723-220778";
+  const secondaryPhone = anyInfo.secondaryPhone || "";
 
   // Student circular photo
   let studentPhoto = "";
@@ -160,19 +167,19 @@ async function buildMarksheetCard(
                     width: "*",
                     stack: [
                       {
-                        text: "ইসলামী দাওয়াহ্ ইনস্টিটিউট, লালমনিরহাট",
+                        text: instituteName,
                         alignment: "center",
                         fontSize: 17,
                         bold: true,
                       },
                       {
-                        text: "মাষ্টারপাড়া, তুষভান্ডার, কালীগঞ্জ, লালমনিরহাট",
+                        text: address,
                         alignment: "center",
                         fontSize: 11,
                         margin: [0, 3, 0, 0],
                       },
                       {
-                        text: "মোবাইল নং ০১৭২৩-২২০৭৭৮, ০১৭১৭৫১১৭৬০",
+                        text: `মোবাইল নং ${phone}, ${secondaryPhone}`,
                         alignment: "center",
                         fontSize: 10,
                         color: "#555",
@@ -478,6 +485,13 @@ export default function ClasswiseResult() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const [images, setImages] = useState({ logo: "", sign1: "", sign2: "" });
+
+  const { info } = useAcademicInfo();
+  const anyInfo = (info ?? {}) as Record<string, any>;
+  const instituteName = anyInfo.name || "ইসলামী দাওয়াহ ইনস্টিটিউট";
+  const address = anyInfo.address || "তুষভান্ডার, কালীগঞ্জ, লালমনিরহাট";
+  const phone = anyInfo.phone || "+880-1723-220778";
+  const secondaryPhone = anyInfo.secondaryPhone || "";
 
   // Load PDF images on mount
   useEffect(() => {

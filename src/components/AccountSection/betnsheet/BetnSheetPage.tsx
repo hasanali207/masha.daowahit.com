@@ -9,6 +9,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SolaimanLipiBase64 } from "@/fonts/solaiman";
+import { useAcademicInfo } from "@/lib/useAcademicInfo";
+import { toBanglaNumber } from "@/utils/toBanglaNumber";
 import { Printer } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -47,13 +49,27 @@ export default function BetonSheetPage() {
   const [classes, setClasses] = useState<string[]>([]);
   const [filtered, setFiltered] = useState<Admission[]>([]);
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
+  const { info } = useAcademicInfo();
 
+  const anyInfo = (info ?? {}) as Record<string, any>;
+
+  const instituteName = anyInfo.name || "ইসলামী দাওয়াহ ইনস্টিটিউট";
+  const address = anyInfo.address || "তুষভান্ডার, কালীগঞ্জ, লালমনিরহাট";
+  const phone = anyInfo.phone || "+880-1723-220778";
+  const secondaryPhone = anyInfo.secondaryPhone || "";
   const [filter, setFilter] = useState({
     session: "",
     className: "",
     studentCode: "",
   });
 
+  const currentDate = new Date();
+
+  const englishYear = currentDate.getFullYear();
+
+  const hijriYear = new Intl.DateTimeFormat("en-US-u-ca-islamic-umalqura", {
+    year: "numeric",
+  }).format(currentDate);
   const [images, setImages] = useState({
     logo: "",
   });
@@ -82,8 +98,8 @@ export default function BetonSheetPage() {
       new Set(
         admissions
           .filter((a) => a.session.name === filter.session)
-          .map((a) => a.student.currentClass)
-      )
+          .map((a) => a.student.currentClass),
+      ),
     );
 
     setClasses(cls);
@@ -100,7 +116,7 @@ export default function BetonSheetPage() {
     const data = admissions.filter(
       (a) =>
         a.session.name === filter.session &&
-        a.student.currentClass === filter.className
+        a.student.currentClass === filter.className,
     );
 
     setFiltered(data);
@@ -175,17 +191,17 @@ export default function BetonSheetPage() {
                               width: "*",
                               stack: [
                                 {
-                                  text: "ইসলামী দাওয়াহ ইনস্টিটিউট, তুষভান্ডার।",
+                                  text: instituteName,
                                   style: "title",
                                   alignment: "center",
                                 },
                                 {
-                                  text: "মাস্টারপাড়া, তুষভান্ডার, কালীগঞ্জ, লালমনিরহাট।",
+                                  text: address,
                                   style: "subtitle",
                                   alignment: "center",
                                 },
                                 {
-                                  text: "মোবাইল নং: ০১৭২৩-২২০৭৭৮ , ০১৭১৭-৫১১৭৬০",
+                                  text: `মোবাইল নং: ${phone} , ${secondaryPhone}`,
                                   style: "subtitle",
                                   alignment: "center",
                                 },
@@ -195,7 +211,7 @@ export default function BetonSheetPage() {
                               width: 75,
                               stack: [
                                 {
-                                  text: "২০২৬ ঈসায়ী",
+                                  text: `${toBanglaNumber(englishYear)} ঈসায়ী`,
                                   bold: true,
                                   alignment: "right",
                                 },
@@ -203,7 +219,10 @@ export default function BetonSheetPage() {
                                   text: "----------------",
                                   alignment: "right",
                                 },
-                                { text: "১৪৪৮ হিজরী", alignment: "right" },
+                                {
+                                  text: `${toBanglaNumber(hijriYear)} হিজরী`,
+                                  alignment: "right",
+                                },
                               ],
                             },
                           ],
@@ -628,7 +647,7 @@ export default function BetonSheetPage() {
     if (!selectedStudent) return;
 
     const admission = admissions.find(
-      (a) => a.student.id === selectedStudent.id
+      (a) => a.student.id === selectedStudent.id,
     );
     if (!admission) return;
 
@@ -661,7 +680,7 @@ export default function BetonSheetPage() {
     if (!filter.studentCode) return;
 
     const admission = admissions.find(
-      (a) => a.student.code === filter.studentCode
+      (a) => a.student.code === filter.studentCode,
     );
     if (!admission) {
       alert("শিক্ষার্থী পাওয়া যায়নি!");

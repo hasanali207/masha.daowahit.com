@@ -1,11 +1,18 @@
 "use client";
 
+import { useAcademicInfo } from "@/lib/useAcademicInfo";
 import { motion } from "framer-motion";
 import { Send } from "lucide-react";
-import { FaFacebook, FaLinkedin, FaWhatsapp, FaYoutube } from "react-icons/fa";
 import SocialIcons from "../shared/socialIcons";
 
 const ContactSection = () => {
+  const { info } = useAcademicInfo();
+  const anyInfo = (info ?? {}) as Record<string, any>;
+  const instituteName = anyInfo.name || "ইসলামী দাওয়াহ ইনস্টিটিউট";
+  const address = anyInfo.address || "তুষভান্ডার, কালীগঞ্জ, লালমনিরহাট";
+  const phone = anyInfo.phone || "+880-1723-220778";
+  const secondaryPhone = anyInfo.secondaryPhone || "";
+
   return (
     <section
       id="contact"
@@ -64,21 +71,21 @@ const ContactSection = () => {
           {/* Live Chat or Contact Info */}
           <div className="flex flex-col justify-center text-center md:text-left bangla">
             <h3 className="text-2xl font-semibold mb-4">
-              ইসলামী দাওয়াহ্ ইনস্টিটিউট, তুষভান্ডার।
+              {`📍 আমাদের ঠিকানা: ${address}`}
             </h3>
             <h3 className="text-2xl font-semibold mb-4">💬 সরাসরি কথা বলুন!</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
               যে কোন সময়, যে কোন প্রয়োজনে যোগাযোগ করতে।
             </p>
             <div className="text-gray-700 dark:text-gray-200 flex flex-col space-y-3">
-              <p>ই-মেইল: afzalhussain0778@gmail.com</p>
-              <p>মোবাইল: +880-1723-220778</p>
-              <p>মাষ্টারপাড়া, তুষভান্ডার, কালীগঞ্জ, লালমনিরহাট</p>
+              <p>ই-মেইল: {info?.email || "afzalhussain0778@gmail.com"}</p>
+              <p>মোবাইল: {phone}</p>
+              <p>{secondaryPhone}</p>
               {/* Live chat script goes here */}
               {/* Example: <div id="tawk-widget" /> */}
             </div>
 
-            <SocialIcons/>
+            <SocialIcons />
           </div>
         </div>
       </div>

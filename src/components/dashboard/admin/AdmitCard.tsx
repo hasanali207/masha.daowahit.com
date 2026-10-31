@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SolaimanLipiBase64 } from "@/fonts/solaiman";
+import { useAcademicInfo } from "@/lib/useAcademicInfo";
 import { formatDateBn } from "@/utils/dateBn";
 import { Printer } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -48,6 +49,12 @@ export default function ExamAdmitCard() {
   const [exams, setExams] = useState<ExamType[]>([]);
   const [registrations, setRegistrations] = useState<RegistrationType[]>([]);
   const [loading, setLoading] = useState(false);
+  const { info } = useAcademicInfo();
+  const anyInfo = (info ?? {}) as Record<string, any>;
+  const instituteName = anyInfo.name || "ইসলামী দাওয়াহ ইনস্টিটিউট";
+  const address = anyInfo.address || "তুষভান্ডার, কালীগঞ্জ, লালমনিরহাট";
+  const phone = anyInfo.phone || "+880-1723-220778";
+  const secondaryPhone = anyInfo.secondaryPhone || "";
 
   const [filters, setFilters] = useState({
     sessionId: "",
@@ -219,18 +226,18 @@ export default function ExamAdmitCard() {
                     {
                       stack: [
                         {
-                          text: "ইসলামী দাওয়াহ ইনস্টিটিউট, তুষভান্ডার",
+                          text: instituteName,
                           style: "title",
                           alignment: "center",
                         },
                         {
-                          text: "মাষ্টারপাড়া, তুষভান্ডার, কালীগঞ্জ, লালমনিরহাট",
+                          text: address,
                           style: "subtitle",
                           alignment: "center",
                           margin: [0, 0, 0, 0],
                         },
                         {
-                          text: "মোবাইল নং ০১৭২৩-২২০৭৭৮, ০১৭১৭৫১১৭৬০",
+                          text: `মোবাইল নং ${phone}, ${secondaryPhone}`,
                           alignment: "center",
                           margin: [0, 0, 0, 0],
                         },

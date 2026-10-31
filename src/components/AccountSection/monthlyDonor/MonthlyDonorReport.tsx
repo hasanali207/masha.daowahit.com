@@ -17,6 +17,7 @@ import {
 import { SolaimanLipiBase64 } from "@/fonts/solaiman";
 import api from "@/lib/axios";
 import { getErrorMessage } from "@/lib/getErrorMessage ";
+import { useAcademicInfo } from "@/lib/useAcademicInfo";
 import {
   FileSpreadsheet,
   FileText,
@@ -60,6 +61,13 @@ export default function MonthlyDonorReport() {
   const [smsText, setSmsText] = useState(
     "আসসালামু আলাইকুম- {name}, আপনার মোট বকেয়া অনুদান: ৳{due} Visit: https://islamidawahinstitute.com/",
   );
+
+  const { info } = useAcademicInfo();
+  const anyInfo = (info ?? {}) as Record<string, any>;
+  const instituteName = anyInfo.name || "ইসলামী দাওয়াহ ইনস্টিটিউট";
+  const address = anyInfo.address || "তুষভান্ডার, কালীগঞ্জ, লালমনিরহাট";
+  const phone = anyInfo.phone || "+880-1723-220778";
+  const secondaryPhone = anyInfo.secondaryPhone || "";
 
   const groupByDonor = (data: any[]) => {
     const map: any = {};
@@ -243,7 +251,7 @@ export default function MonthlyDonorReport() {
 
       return [
         {
-          text: `ইসলামী দাওয়াহ্ ইনস্টিটিউট, তুষভান্ডার।`,
+          text: `${instituteName}`,
           style: "title",
           alignment: "center",
           margin: [0, 0, 0, 2],
