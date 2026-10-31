@@ -200,7 +200,7 @@ const imageFields: { name: ImageFieldKey; label: string; hint: string }[] = [
   {
     name: "banner",
     label: "প্রতিষ্ঠানের ব্যানার",
-    hint: "চওড়া ছবি, যেমন ১২৮০×২০০",
+    hint: "চওড়া ছবি, যেমন ১৮০০×৩০০",
   },
   {
     name: "favicon",
