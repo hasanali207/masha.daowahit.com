@@ -49,7 +49,6 @@ const Footer = () => {
   const usefulLinks = [
     { label: "Admission", href: "/admission" },
     { label: "Login", href: "/login" },
-    { label: "Register", href: "/register" },
     { label: "Privacy Policy", href: "/privacy-policy" },
     { label: "Terms & Conditions", href: "/terms" },
   ];
