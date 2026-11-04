@@ -6,7 +6,6 @@ import {
   BarChart3,
   BookOpen,
   BookText,
-  Brush,
   CalendarCheck,
   CalendarClock,
   CalendarDays,
@@ -43,10 +42,8 @@ import {
   NotebookPenIcon,
   PenLine,
   Power,
-  Presentation,
   Printer,
   Settings,
-  ShoppingCart,
   Stamp,
   User2Icon,
   UserCheck,
@@ -62,7 +59,7 @@ interface MenuItem {
   name: string; // Menu item এর নাম
   icon: any; // Icon component
   href?: string; // সাধারণ লিঙ্ক
-  sub?: MenuItem[]; // Dropdown sub items
+  sub?: MenuItem[]; // Dropdown sub items (শুধু এক লেভেল)
   protectedPath?: string; // Protected route এর path
 }
 
@@ -73,17 +70,15 @@ interface MenuItem {
  *  প্রতিটি role-এর মেনু একই ক্রমে সাজানো:
  *
  *   1. ড্যাশবোর্ড
- *   2. প্রতিষ্ঠান পরিচিতি      (প্রধান শিক্ষক, ম্যানেজিং কমিটি, যোগাযোগ)
- *   3. একাডেমিক               (শিক্ষাবর্ষ, শিক্ষার্থী, পরীক্ষা, ফলাফল)
- *   4. শিক্ষক ও কর্মচারী (HR)  (প্রোফাইল, দায়িত্ব, বেতন, হাজিরা)
- *   5. অফিস একাউন্টিং          (ফি, আয়-ব্যয়, অনুদান, ইনভয়েস)
- *   6. হোস্টেল ও সেবা বিভাগ   (বোর্ডিং, ক্যান্টিন, কেয়ার টেকার)
- *   7. ওয়েবসাইট ও ডকুমেন্টস
- *   8. যোগাযোগ (SMS)
- *   9. সিস্টেম / Settings
- *  10. বাহির ও লগ আউট
+ *   2. একাডেমিক               (শিক্ষাবর্ষ, শিক্ষার্থী, পরীক্ষা, ফলাফল)
+ *   3. শিক্ষক ও কর্মচারী (HR)  (প্রোফাইল, দায়িত্ব, বেতন, হাজিরা)
+ *   4. অফিস একাউন্টিং          (ফি, আয়-ব্যয়, অনুদান, ইনভয়েস)
+ *   5. ওয়েবসাইট ও ডকুমেন্টস
+ *   6. যোগাযোগ (SMS)
+ *   7. সিস্টেম / Settings
+ *   8. বাহির ও লগ আউট
  *
- *  নিয়ম: ৩ লেভেলের বেশি নেস্টিং নয়।
+ *  নিয়ম: dropdown শুধু এক লেভেল। sub-এর ভিতরে আর sub নেই।
  * =====================================================================
  */
 
@@ -296,197 +291,179 @@ export const menus: Record<string, MenuItem[]> = {
 
     // ---------- শিক্ষার্থী ফি (সেটআপ → আদায় → রিপোর্ট) ----------
     {
-      name: "শিক্ষার্থী ফি",
+      name: "ফি সেটআপ",
       icon: DollarSignIcon,
       sub: [
         {
-          name: "ফি সেটআপ",
+          name: "ফি-এর ধরন",
+          href: "/accountant/payments/feecategory",
           icon: List,
-          sub: [
-            {
-              name: "ফি-এর ধরন",
-              href: "/accountant/payments/feecategory",
-              icon: List,
-            },
-            {
-              name: "শ্রেণিভিত্তিক ফি",
-              href: "/accountant/payments/classfees",
-              icon: GraduationCap,
-            },
-            {
-              name: "শিক্ষার্থী আলাদা ফি",
-              href: "/accountant/payments/studentfees",
-              icon: UserCog,
-            },
-          ],
         },
         {
-          name: "ফি তৈরি ও আদায়",
-          icon: CreditCard,
-          sub: [
-            {
-              name: "ফি তৈরি",
-              href: "/accountant/payments/payment",
-              icon: FilePlus,
-            },
-            {
-              name: "অতিরিক্ত ফি যুক্ত",
-              href: "/accountant/payments/addextrafee",
-              icon: FilePlus,
-            },
-            {
-              name: "শিক্ষার্থী ফি জমা",
-              icon: CalendarRange,
-              href: "/accountant/accounts/payments/mutiplemonthcash",
-            },
-            {
-              name: "ইনভয়েস প্রিন্ট",
-              icon: Printer,
-              href: "/accountant/accounts/transactioninvoice",
-            },
-          ],
+          name: "শ্রেণিভিত্তিক ফি",
+          href: "/accountant/payments/classfees",
+          icon: GraduationCap,
         },
         {
-          name: "ফি রিপোর্ট",
+          name: "শিক্ষার্থী আলাদা ফি",
+          href: "/accountant/payments/studentfees",
+          icon: UserCog,
+        },
+      ],
+    },
+    {
+      name: "ফি তৈরি ও আদায়",
+      icon: CreditCard,
+      sub: [
+        {
+          name: "ফি তৈরি",
+          href: "/accountant/payments/payment",
+          icon: FilePlus,
+        },
+        {
+          name: "অতিরিক্ত ফি যুক্ত",
+          href: "/accountant/payments/addextrafee",
+          icon: FilePlus,
+        },
+        {
+          name: "শিক্ষার্থী ফি জমা",
+          icon: CalendarRange,
+          href: "/accountant/accounts/payments/mutiplemonthcash",
+        },
+        {
+          name: "ইনভয়েস প্রিন্ট",
+          icon: Printer,
+          href: "/accountant/accounts/transactioninvoice",
+        },
+      ],
+    },
+    {
+      name: "ফি রিপোর্ট",
+      icon: BarChart3,
+      sub: [
+        {
+          name: "লেনদেন রিপোর্ট",
           icon: BarChart3,
-          sub: [
-            {
-              name: "লেনদেন রিপোর্ট",
-              icon: BarChart3,
-              href: "/accountant/payments/paidpayments",
-            },
-            {
-              name: "শ্রেণিভিত্তিক রিপোর্ট",
-              icon: GraduationCap,
-              href: "/accountant/classledger",
-            },
-          ],
+          href: "/accountant/payments/paidpayments",
+        },
+        {
+          name: "শ্রেণিভিত্তিক রিপোর্ট",
+          icon: GraduationCap,
+          href: "/accountant/classledger",
         },
       ],
     },
 
     // ---------- আয়-ব্যয় ----------
     {
-      name: "আয়-ব্যয়",
-      icon: Wallet,
+      name: "আয়",
+      icon: BanknoteArrowUp,
       sub: [
         {
-          name: "আয়",
+          name: "আয়ের খাতসমূহ",
+          href: "/accountant/accounts/income/accountcategory",
+          icon: ListPlus,
+        },
+        {
+          name: "আয়ের হিসাব",
+          href: "/accountant/accounts/income/accountentries",
           icon: BanknoteArrowUp,
-          sub: [
-            {
-              name: "আয়ের খাতসমূহ",
-              href: "/accountant/accounts/income/accountcategory",
-              icon: ListPlus,
-            },
-            {
-              name: "আয়ের হিসাব",
-              href: "/accountant/accounts/income/accountentries",
-              icon: BanknoteArrowUp,
-            },
-          ],
+        },
+      ],
+    },
+    {
+      name: "ব্যয়",
+      icon: BanknoteArrowDown,
+      sub: [
+        {
+          name: "ব্যয়ের খাতসমূহ",
+          href: "/accountant/accounts/expense/accountcategory",
+          icon: ListMinus,
         },
         {
-          name: "ব্যয়",
+          name: "ব্যয়ের হিসাব",
+          href: "/accountant/accounts/expense/accountentries",
           icon: BanknoteArrowDown,
-          sub: [
-            {
-              name: "ব্যয়ের খাতসমূহ",
-              href: "/accountant/accounts/expense/accountcategory",
-              icon: ListMinus,
-            },
-            {
-              name: "ব্যয়ের হিসাব",
-              href: "/accountant/accounts/expense/accountentries",
-              icon: BanknoteArrowDown,
-            },
-          ],
+        },
+      ],
+    },
+    {
+      name: "আয়-ব্যয় রিপোর্ট ও ক্লোজিং",
+      icon: FileBarChart,
+      sub: [
+        {
+          name: "আয় ব্যয় ম্যাপিং",
+          href: "/accountant/accounts/mapping",
+          icon: ArrowLeftRight,
         },
         {
-          name: "রিপোর্ট ও ক্লোজিং",
+          name: "আয় ব্যয় খাত রিপোর্ট",
+          href: "/accountant/accounts/allocationreport",
+          icon: Banknote,
+        },
+        {
+          name: "আয় ব্যয় রিপোর্ট",
+          href: "/accountant/accounts/report",
           icon: FileBarChart,
-          sub: [
-            {
-              name: "আয় ব্যয় ম্যাপিং",
-              href: "/accountant/accounts/mapping",
-              icon: ArrowLeftRight,
-            },
-            {
-              name: "আয় ব্যয় খাত রিপোর্ট",
-              href: "/accountant/accounts/allocationreport",
-              icon: Banknote,
-            },
-            {
-              name: "আয় ব্যয় রিপোর্ট",
-              href: "/accountant/accounts/report",
-              icon: FileBarChart,
-            },
-            {
-              name: "বাৎসরিক হিসাব ক্লোজিং",
-              href: "/accountant/accounts/yearly",
-              icon: Stamp,
-            },
-          ],
+        },
+        {
+          name: "বাৎসরিক হিসাব ক্লোজিং",
+          href: "/accountant/accounts/yearly",
+          icon: Stamp,
         },
       ],
     },
 
-    // ---------- অনুদান (সাধারণ + মাসিক এক জায়গায়) ----------
+    // ---------- অনুদান ----------
     {
-      name: "অনুদান",
+      name: "সাধারণ অনুদান",
       icon: HandHelping,
       sub: [
         {
-          name: "সাধারণ অনুদান",
-          icon: HandHelping,
-          sub: [
-            {
-              name: "জমা করুন",
-              icon: KeySquareIcon,
-              href: "/accountant/donation",
-            },
-            {
-              name: "রিপোর্ট দেখুন",
-              icon: FileBarChart,
-              href: "/accountant/donation/report",
-            },
-          ],
+          name: "জমা করুন",
+          icon: KeySquareIcon,
+          href: "/accountant/donation",
         },
         {
-          name: "মাসিক সদস্য অনুদান",
-          icon: HeartHandshake,
-          sub: [
-            {
-              name: "দাতা সদস্য তৈরি",
-              icon: UserPlus,
-              href: "/accountant/donor/adddonor",
-            },
-            {
-              name: "দাতা সদস্যগণ",
-              icon: Users,
-              href: "/accountant/donor/alldonor",
-            },
-            {
-              name: "দানের পরিমাণ",
-              icon: Banknote,
-              href: "/accountant/donor/addamount",
-            },
-            {
-              name: "অনুদান পেমেন্ট তৈরি",
-              icon: FilePlus,
-              href: "/accountant/donor/generateinvoice",
-            },
-            {
-              name: "জমা করুন",
-              icon: KeySquareIcon,
-              href: "/accountant/donor/receivedamount",
-            },
-            {
-              name: "অনুদান রিপোর্ট",
-              icon: FileBarChart,
-              href: "/accountant/donor/report",
-            },
-          ],
+          name: "রিপোর্ট দেখুন",
+          icon: FileBarChart,
+          href: "/accountant/donation/report",
+        },
+      ],
+    },
+    {
+      name: "মাসিক সদস্য অনুদান",
+      icon: HeartHandshake,
+      sub: [
+        {
+          name: "দাতা সদস্য তৈরি",
+          icon: UserPlus,
+          href: "/accountant/donor/adddonor",
+        },
+        {
+          name: "দাতা সদস্যগণ",
+          icon: Users,
+          href: "/accountant/donor/alldonor",
+        },
+        {
+          name: "দানের পরিমাণ",
+          icon: Banknote,
+          href: "/accountant/donor/addamount",
+        },
+        {
+          name: "অনুদান পেমেন্ট তৈরি",
+          icon: FilePlus,
+          href: "/accountant/donor/generateinvoice",
+        },
+        {
+          name: "জমা করুন",
+          icon: KeySquareIcon,
+          href: "/accountant/donor/receivedamount",
+        },
+        {
+          name: "অনুদান রিপোর্ট",
+          icon: FileBarChart,
+          href: "/accountant/donor/report",
         },
       ],
     },
@@ -662,537 +639,406 @@ export const menus: Record<string, MenuItem[]> = {
     { name: "ড্যাশবোর্ড", icon: Home, href: "/superadmin" },
 
     // =====================================================
-    // ১. প্রতিষ্ঠান পরিচিতি (তথ্য ও যোগাযোগ তালিকা)
-    //    TODO: পেজ তৈরি হলে নিচের "/superadmin" বদলে আসল route দিন
-    // =====================================================
-    {
-      name: "প্রধান শিক্ষক প্রোফাইল",
-      icon: Home,
-      sub: [
-        {
-          name: "প্রাতিষ্ঠানিক কাঠামো",
-          icon: Stamp,
-          sub: [
-            {
-              name: "প্রতিষ্ঠানের নীতিমালা",
-              icon: BookText,
-              href: "/superadmin",
-            },
-            { name: "পরিচালনা পর্ষদ", icon: Users, href: "/superadmin" },
-            { name: "ম্যানেজিং কমিটি", icon: Users, href: "/superadmin" },
-            {
-              name: "উপজেলা প্রশাসন পরিচিতি",
-              icon: Users,
-              href: "/superadmin",
-            },
-            {
-              name: "থানা ও পুলিশ প্রশাসন পরিচিতি",
-              icon: Users,
-              href: "/superadmin",
-            },
-          ],
-        },
-        {
-          name: "দাতা ও শুভানুধ্যায়ী তথ্য",
-          icon: HeartHandshake,
-          sub: [
-            {
-              name: "সহযোগী ব্যক্তি তথ্য",
-              icon: UserRound,
-              href: "/superadmin",
-            },
-            {
-              name: "প্রাক্তন শিক্ষার্থী তথ্য",
-              icon: UserRound,
-              href: "/superadmin",
-            },
-            {
-              name: "চাকরিজীবী অভিভাবক",
-              icon: UserRound,
-              href: "/superadmin",
-            },
-            {
-              name: "জনপ্রতিনিধি অভিভাবক",
-              icon: UserRound,
-              href: "/superadmin",
-            },
-            {
-              name: "ব্যবসায়িক অভিভাবক",
-              icon: UserRound,
-              href: "/superadmin",
-            },
-            {
-              name: "স্থানীয় এলাকাবাসী",
-              icon: UserRound,
-              href: "/superadmin",
-            },
-          ],
-        },
-        {
-          name: "জরুরি সেবা ও মিস্ত্রী",
-          icon: UserCog,
-          sub: [
-            { name: "ফায়ার সার্ভিস", icon: UserCog, href: "/superadmin" },
-            { name: "ইলেকট্রিক মিস্ত্রী", icon: UserCog, href: "/superadmin" },
-            { name: "নির্মাণ মিস্ত্রি", icon: UserCog, href: "/superadmin" },
-            { name: "ফিটিং ও প্লামবার", icon: UserCog, href: "/superadmin" },
-          ],
-        },
-      ],
-    },
-
-    // =====================================================
-    // ২. একাডেমিক বিভাগ
+    // ১. একাডেমিক বিভাগ
     //    শিক্ষাবর্ষ → শিক্ষার্থী → পরীক্ষা → ফলাফল
     // =====================================================
     {
-      name: "একাডেমিক বিভাগ",
+      name: "শিক্ষাবর্ষ ও শ্রেণি",
       icon: User2Icon,
       sub: [
         {
-          name: "শিক্ষাবর্ষ ও শ্রেণি",
-          icon: CalendarClock,
-          sub: [
-            {
-              name: "নতুন শিক্ষাবর্ষ",
-              icon: CalendarDays,
-              href: "/superadmin/admin/session",
-            },
-            {
-              name: "নতুন শ্রেণি যোগ",
-              icon: CalendarDays,
-              href: "/superadmin/admin/addclass",
-            },
-            {
-              name: "বিষয়সমূহ",
-              icon: Library,
-              href: "/superadmin/admin/subjects",
-            },
-          ],
+          name: "নতুন শিক্ষাবর্ষ",
+          icon: CalendarDays,
+          href: "/superadmin/admin/session",
         },
         {
-          name: "শিক্ষার্থী",
-          icon: Users,
-          sub: [
-            {
-              name: "নতুন শিক্ষার্থী ভর্তি",
-              icon: UserPlus,
-              href: "/superadmin/admin/addstudent",
-            },
-            {
-              name: "শ্রেণিতে ভর্তি",
-              icon: NotebookPen,
-              href: "/superadmin/admin/admission",
-            },
-            {
-              name: "সকল শিক্ষার্থী",
-              icon: UserRoundSearch,
-              href: "/superadmin/admin/student",
-            },
-            {
-              name: "ডাটা ডাউনলোড",
-              icon: FileDown,
-              href: "/superadmin/admin/downlaod",
-            },
-          ],
+          name: "নতুন শ্রেণি যোগ",
+          icon: CalendarDays,
+          href: "/superadmin/admin/addclass",
         },
         {
-          name: "পরীক্ষা",
-          icon: BookOpen,
-          sub: [
-            {
-              name: "পরীক্ষার নাম",
-              href: "/superadmin/admin/examname",
-              icon: BookText,
-            },
-            {
-              name: "পরীক্ষার বিষয় সমূহ",
-              href: "/superadmin/admin/examsubjects",
-              icon: Library,
-            },
-            {
-              name: "পরীক্ষার্থী নিবন্ধন",
-              href: "/superadmin/admin/examstudent",
-              icon: ClipboardList,
-            },
-            {
-              name: "প্রবেশপত্র",
-              href: "/superadmin/admin/admitcard",
-              icon: IdCard,
-            },
-          ],
-        },
-        {
-          name: "ফলাফল",
-          icon: FileBarChart,
-          sub: [
-            {
-              name: "গড় ফলাফল এন্ট্রি",
-              href: "/superadmin/admin/entryresult",
-              icon: PenLine,
-            },
-            {
-              name: "ফলাফল",
-              href: "/superadmin/admin/result",
-              icon: FileBarChart,
-            },
-            {
-              name: "শ্রেণিভিত্তিক মার্কশিট",
-              href: "/superadmin/admin/classwarymarksheet",
-              icon: FileText,
-            },
-          ],
+          name: "বিষয়সমূহ",
+          icon: Library,
+          href: "/superadmin/admin/subjects",
         },
       ],
     },
-
-    // =====================================================
-    // ৩. শিক্ষক ও কর্মচারী (HR)
-    //    প্রোফাইল → দায়িত্ব → বেতন → হাজিরা/ছুটি
-    // =====================================================
     {
-      name: "শিক্ষক প্রোফাইল",
+      name: "শিক্ষার্থী",
       icon: Users,
       sub: [
         {
-          name: "শিক্ষক তথ্য",
+          name: "নতুন শিক্ষার্থী ভর্তি",
+          icon: UserPlus,
+          href: "/superadmin/admin/addstudent",
+        },
+        {
+          name: "শ্রেণিতে ভর্তি",
+          icon: NotebookPen,
+          href: "/superadmin/admin/admission",
+        },
+        {
+          name: "সকল শিক্ষার্থী",
           icon: UserRoundSearch,
-          sub: [
-            {
-              name: "শিক্ষক প্রোফাইল তৈরি",
-              icon: UserPlus,
-              href: "/superadmin/admin/addteacher",
-            },
-            {
-              name: "শিক্ষক বায়োডাটা",
-              icon: UserRoundSearch,
-              href: "/superadmin/teacher/allteacher",
-            },
-            {
-              // TODO: শিক্ষক কোয়ার্টার নীতিমালার আসল route দিন
-              name: "শিক্ষক কোয়ার্টার নীতিমালা",
-              icon: FileText,
-              href: "/superadmin",
-            },
-          ],
+          href: "/superadmin/admin/student",
         },
         {
-          name: "দায়িত্ব",
+          name: "ডাটা ডাউনলোড",
+          icon: FileDown,
+          href: "/superadmin/admin/downlaod",
+        },
+      ],
+    },
+    {
+      name: "পরীক্ষা",
+      icon: BookOpen,
+      sub: [
+        {
+          name: "পরীক্ষার নাম",
+          href: "/superadmin/admin/examname",
+          icon: BookText,
+        },
+        {
+          name: "পরীক্ষার বিষয় সমূহ",
+          href: "/superadmin/admin/examsubjects",
+          icon: Library,
+        },
+        {
+          name: "পরীক্ষার্থী নিবন্ধন",
+          href: "/superadmin/admin/examstudent",
           icon: ClipboardList,
-          sub: [
-            // TODO: নিচের দুটির route একই — আলাদা route দিন
-            {
-              name: "শিক্ষকগণের অতিরিক্ত দায়িত্ব",
-              icon: ClipboardList,
-              href: "/superadmin/teacher/responsibilitydashboard",
-            },
-            {
-              name: "দৈনিক দায়িত্ব রিপোর্ট",
-              icon: FileBarChart,
-              href: "/superadmin/teacher/responsibilitydashboard",
-            },
-          ],
         },
         {
-          name: "বেতন",
-          icon: Banknote,
-          sub: [
-            {
-              name: "বেতন তৈরি",
-              icon: FilePlus,
-              href: "/superadmin/teacher/createsalary",
-            },
-            {
-              name: "শিক্ষক প্রোফাইল/বেতন তালিকা",
-              icon: List,
-              href: "/superadmin/teacher/salarylist",
-            },
-          ],
+          name: "প্রবেশপত্র",
+          href: "/superadmin/admin/admitcard",
+          icon: IdCard,
+        },
+      ],
+    },
+    {
+      name: "ফলাফল",
+      icon: FileBarChart,
+      sub: [
+        {
+          name: "গড় ফলাফল এন্ট্রি",
+          href: "/superadmin/admin/entryresult",
+          icon: PenLine,
+        },
+        {
+          name: "ফলাফল",
+          href: "/superadmin/admin/result",
+          icon: FileBarChart,
+        },
+        {
+          name: "শ্রেণিভিত্তিক মার্কশিট",
+          href: "/superadmin/admin/classwarymarksheet",
+          icon: FileText,
         },
       ],
     },
 
     // =====================================================
-    // ৪. অফিস একাউন্টিং
-    //    শিক্ষার্থী ফি → আয়-ব্যয় → অনুদান → ইনভয়েস
+    // ২. শিক্ষক ও কর্মচারী (HR)
+    //    প্রোফাইল → দায়িত্ব → বেতন
     // =====================================================
     {
-      name: "অফিস একাউন্টিং",
+      name: "শিক্ষক তথ্য",
+      icon: Users,
+      sub: [
+        {
+          name: "শিক্ষক প্রোফাইল তৈরি",
+          icon: UserPlus,
+          href: "/superadmin/admin/addteacher",
+        },
+        {
+          name: "শিক্ষক বায়োডাটা",
+          icon: UserRoundSearch,
+          href: "/superadmin/teacher/allteacher",
+        },
+        {
+          // TODO: শিক্ষক কোয়ার্টার নীতিমালার আসল route দিন
+          name: "শিক্ষক কোয়ার্টার নীতিমালা",
+          icon: FileText,
+          href: "/superadmin",
+        },
+      ],
+    },
+    {
+      name: "শিক্ষক দায়িত্ব",
+      icon: ClipboardList,
+      sub: [
+        // TODO: নিচের দুটির route একই — আলাদা route দিন
+        {
+          name: "শিক্ষকগণের অতিরিক্ত দায়িত্ব",
+          icon: ClipboardList,
+          href: "/superadmin/teacher/responsibilitydashboard",
+        },
+        {
+          name: "দৈনিক দায়িত্ব রিপোর্ট",
+          icon: FileBarChart,
+          href: "/superadmin/teacher/responsibilitydashboard",
+        },
+      ],
+    },
+    {
+      name: "শিক্ষক বেতন",
+      icon: Banknote,
+      sub: [
+        {
+          name: "বেতন তৈরি",
+          icon: FilePlus,
+          href: "/superadmin/teacher/createsalary",
+        },
+        {
+          name: "শিক্ষক প্রোফাইল/বেতন তালিকা",
+          icon: List,
+          href: "/superadmin/teacher/salarylist",
+        },
+      ],
+    },
+
+    // =====================================================
+    // ৩. অফিস একাউন্টিং
+    //    শিক্ষার্থী ফি → আয়-ব্যয় → অনুদান
+    // =====================================================
+    {
+      name: "শিক্ষার্থী ফি ব্যবস্থাপনা",
+      icon: CreditCard,
+      sub: [
+        // ফি সেটআপ
+        {
+          name: "ফি-এর ধরন",
+          href: "/superadmin/accountant/payments/feecategory",
+          icon: List,
+        },
+        {
+          name: "শ্রেণিভিত্তিক ফি",
+          href: "/superadmin/accountant/payments/classfees",
+          icon: GraduationCap,
+        },
+        {
+          name: "শিক্ষার্থী আলাদা ফি",
+          href: "/superadmin/accountant/payments/studentfees",
+          icon: UserCog,
+        },
+        // ফি তৈরি ও আদায়
+        {
+          name: "ফি তৈরি",
+          href: "/superadmin/accountant/payments/payment",
+          icon: FilePlus,
+        },
+        {
+          name: "অতিরিক্ত ফি যুক্ত",
+          href: "/superadmin/accountant/addextrafee",
+          icon: FilePlus,
+        },
+        {
+          name: "শিক্ষার্থী ফি গ্রহণ",
+          href: "/superadmin/accountant/accounts/payments/mutiplemonthcash",
+          icon: CalendarRange,
+        },
+        {
+          name: "ইনভয়েস প্রিন্ট",
+          href: "/superadmin/accountant/transactioninvoice",
+          icon: Printer,
+        },
+        // রিপোর্ট
+        {
+          name: "লেনদেন রিপোর্ট",
+          href: "/superadmin/accountant/payments/paidpayments",
+          icon: BarChart3,
+        },
+        {
+          name: "শ্রেণিভিত্তিক রিপোর্ট",
+          href: "/superadmin/admin/classledger",
+          icon: GraduationCap,
+        },
+      ],
+    },
+    {
+      name: "আয়-ব্যয় ব্যবস্থাপনা",
       icon: Wallet,
       sub: [
+        // আয়
         {
-          name: "শিক্ষার্থী ফি ব্যবস্থাপনা",
-          icon: CreditCard,
-          sub: [
-            // ফি সেটআপ
-            {
-              name: "ফি-এর ধরন",
-              href: "/superadmin/accountant/payments/feecategory",
-              icon: List,
-            },
-            {
-              name: "শ্রেণিভিত্তিক ফি",
-              href: "/superadmin/accountant/payments/classfees",
-              icon: GraduationCap,
-            },
-            {
-              name: "শিক্ষার্থী আলাদা ফি",
-              href: "/superadmin/accountant/payments/studentfees",
-              icon: UserCog,
-            },
-            // ফি তৈরি ও আদায়
-            {
-              name: "ফি তৈরি",
-              href: "/superadmin/accountant/payments/payment",
-              icon: FilePlus,
-            },
-            {
-              name: "অতিরিক্ত ফি যুক্ত",
-              href: "/superadmin/accountant/addextrafee",
-              icon: FilePlus,
-            },
-            {
-              name: "শিক্ষার্থী ফি গ্রহণ",
-              href: "/superadmin/accountant/accounts/payments/mutiplemonthcash",
-              icon: CalendarRange,
-            },
-            {
-              name: "ইনভয়েস প্রিন্ট",
-              href: "/superadmin/accountant/transactioninvoice",
-              icon: Printer,
-            },
-            // রিপোর্ট
-            {
-              name: "লেনদেন রিপোর্ট",
-              href: "/superadmin/accountant/payments/paidpayments",
-              icon: BarChart3,
-            },
-            {
-              name: "শ্রেণিভিত্তিক রিপোর্ট",
-              href: "/superadmin/admin/classledger",
-              icon: GraduationCap,
-            },
-          ],
-        },
-
-        {
-          name: "আয়-ব্যয় ব্যবস্থাপনা",
-          icon: Wallet,
-          sub: [
-            // আয়
-            {
-              name: "আয়ের খাতসমূহ",
-              href: "/superadmin/accountant/accounts/income/accountcategory",
-              icon: ListPlus,
-            },
-            {
-              name: "হ্যান্ড রশিদ এন্ট্রি",
-              href: "/superadmin/accountant/accounts/income/accountentries",
-              icon: BanknoteArrowUp,
-            },
-            // ব্যয়
-            {
-              name: "ব্যয়ের খাতসমূহ",
-              href: "/superadmin/accountant/accounts/expense/accountcategory",
-              icon: ListMinus,
-            },
-            {
-              name: "হ্যান্ড ভাউচার এন্ট্রি",
-              href: "/superadmin/accountant/accounts/expense/accountentries",
-              icon: BanknoteArrowDown,
-            },
-            // ম্যাপিং ও রিপোর্ট
-            {
-              name: "আয় ব্যয় ম্যাপিং",
-              href: "/superadmin/accountant/accounts/mapping",
-              icon: ArrowLeftRight,
-            },
-            {
-              name: "আয় ব্যয় খাত রিপোর্ট",
-              href: "/superadmin/accountant/accounts/allocationreport",
-              icon: Banknote,
-            },
-            {
-              name: "আয়-ব্যয় রিপোর্ট",
-              href: "/superadmin/accountant/accounts/report",
-              icon: FileBarChart,
-            },
-            {
-              name: "কলামনার ক্যাশবুক",
-              href: "/superadmin/accountant/monthreport",
-              icon: BookOpen,
-            },
-            {
-              name: "বছরব্যাপী হিসাব রিপোর্ট",
-              href: "/superadmin/accountant/accounts/yearly",
-              icon: CalendarDays,
-            },
-          ],
-        },
-
-        {
-          name: "সাধারণ অনুদান",
-          icon: HandHelping,
-          sub: [
-            {
-              name: "জমা করুন",
-              icon: KeySquareIcon,
-              href: "/superadmin/accountant/donation",
-            },
-            {
-              name: "রিপোর্ট দেখুন",
-              icon: FileBarChart,
-              href: "/superadmin/accountant/donations/report",
-            },
-          ],
+          name: "আয়ের খাতসমূহ",
+          href: "/superadmin/accountant/accounts/income/accountcategory",
+          icon: ListPlus,
         },
         {
-          name: "মাসিক সদস্য অনুদান",
-          icon: HeartHandshake,
-          sub: [
-            {
-              name: "দাতা সদস্য তৈরি",
-              icon: UserPlus,
-              href: "/superadmin/accountant/donor/adddonor",
-            },
-            {
-              name: "দাতা সদস্যগণ",
-              icon: Users,
-              href: "/superadmin/donor/donor_list",
-            },
-            {
-              name: "দানের পরিমাণ",
-              icon: Banknote,
-              href: "/superadmin/accountant/donor/donoramount",
-            },
-            {
-              name: "অনুদান পেমেন্ট তৈরি",
-              icon: FilePlus,
-              href: "/superadmin/accountant/monthlydonation/generateinvoice",
-            },
-            {
-              name: "জমা করুন",
-              icon: KeySquareIcon,
-              href: "/superadmin/accountant/monthlydonation",
-            },
-            {
-              name: "অনুদান রিপোর্ট",
-              icon: FileBarChart,
-              href: "/superadmin/accountant/monthlydonation/report",
-            },
-            {
-              name: "ডাটা ডাউনলোড",
-              icon: Download,
-              href: "/superadmin/donor/download",
-            },
-          ],
+          name: "হ্যান্ড রশিদ এন্ট্রি",
+          href: "/superadmin/accountant/accounts/income/accountentries",
+          icon: BanknoteArrowUp,
+        },
+        // ব্যয়
+        {
+          name: "ব্যয়ের খাতসমূহ",
+          href: "/superadmin/accountant/accounts/expense/accountcategory",
+          icon: ListMinus,
+        },
+        {
+          name: "হ্যান্ড ভাউচার এন্ট্রি",
+          href: "/superadmin/accountant/accounts/expense/accountentries",
+          icon: BanknoteArrowDown,
+        },
+        // ম্যাপিং ও রিপোর্ট
+        {
+          name: "আয় ব্যয় ম্যাপিং",
+          href: "/superadmin/accountant/accounts/mapping",
+          icon: ArrowLeftRight,
+        },
+        {
+          name: "আয় ব্যয় খাত রিপোর্ট",
+          href: "/superadmin/accountant/accounts/allocationreport",
+          icon: Banknote,
+        },
+        {
+          name: "আয়-ব্যয় রিপোর্ট",
+          href: "/superadmin/accountant/accounts/report",
+          icon: FileBarChart,
+        },
+        {
+          name: "কলামনার ক্যাশবুক",
+          href: "/superadmin/accountant/monthreport",
+          icon: BookOpen,
+        },
+        {
+          name: "বছরব্যাপী হিসাব রিপোর্ট",
+          href: "/superadmin/accountant/accounts/yearly",
+          icon: CalendarDays,
         },
       ],
     },
-
-    // =====================================================
-    // ৫. হোস্টেল ও সেবা বিভাগ (পেজ তৈরি হচ্ছে)
-    // =====================================================
     {
-      name: "হোস্টেল ও সেবা",
-      icon: Presentation,
+      name: "সাধারণ অনুদান",
+      icon: HandHelping,
       sub: [
         {
-          name: "হোস্টেল সুপার",
-          icon: Stamp,
+          name: "জমা করুন",
+          icon: KeySquareIcon,
+          href: "/superadmin/accountant/donation",
         },
         {
-          name: "বোর্ডিং বিভাগ",
-          icon: Presentation,
-          sub: [
-            { name: "সকল আবাসিক শিক্ষার্থী", icon: Users },
-            { name: "বোর্ডিং খাবারের হিসাব", icon: Wallet },
-            { name: "বোর্ডিং খাবারের হাজিরা", icon: ClipboardList },
-          ],
+          name: "রিপোর্ট দেখুন",
+          icon: FileBarChart,
+          href: "/superadmin/accountant/donations/report",
         },
-        { name: "কেয়ার টেকার", icon: Brush },
-        { name: "ক্যান্টিন ব্যবস্থাপনা", icon: ShoppingCart },
+      ],
+    },
+    {
+      name: "মাসিক সদস্য অনুদান",
+      icon: HeartHandshake,
+      sub: [
+        {
+          name: "দাতা সদস্য তৈরি",
+          icon: UserPlus,
+          href: "/superadmin/accountant/donor/adddonor",
+        },
+        {
+          name: "দাতা সদস্যগণ",
+          icon: Users,
+          href: "/superadmin/donor/donor_list",
+        },
+        {
+          name: "দানের পরিমাণ",
+          icon: Banknote,
+          href: "/superadmin/accountant/donor/donoramount",
+        },
+        {
+          name: "অনুদান পেমেন্ট তৈরি",
+          icon: FilePlus,
+          href: "/superadmin/accountant/monthlydonation/generateinvoice",
+        },
+        {
+          name: "জমা করুন",
+          icon: KeySquareIcon,
+          href: "/superadmin/accountant/monthlydonation",
+        },
+        {
+          name: "অনুদান রিপোর্ট",
+          icon: FileBarChart,
+          href: "/superadmin/accountant/monthlydonation/report",
+        },
+        {
+          name: "ডাটা ডাউনলোড",
+          icon: Download,
+          href: "/superadmin/donor/download",
+        },
       ],
     },
 
     // =====================================================
-    // ৬. ডিজিটাল হাজিরা (শিক্ষক ও কর্মচারীর উপস্থিতি/ছুটি)
+    // ৪. ডিজিটাল হাজিরা (শিক্ষক ও কর্মচারীর উপস্থিতি/ছুটি)
     // =====================================================
     {
-      name: "ডিজিটাল হাজিরা",
+      name: "হাজিরা ডিভাইস",
       icon: Fingerprint,
       sub: [
         {
-          name: "ডিভাইস",
+          name: "ডিভাইস কানেকশন",
+          href: "/superadmin/attendance/devicestatus",
           icon: MonitorSmartphone,
-          sub: [
-            {
-              name: "ডিভাইস কানেকশন",
-              href: "/superadmin/attendance/devicestatus",
-              icon: MonitorSmartphone,
-            },
-            {
-              name: "ডিভাইস ইউজার",
-              href: "/superadmin/attendance/deviceuser",
-              icon: Users,
-            },
-          ],
         },
         {
-          name: "হাজিরা",
+          name: "ডিভাইস ইউজার",
+          href: "/superadmin/attendance/deviceuser",
+          icon: Users,
+        },
+      ],
+    },
+    {
+      name: "হাজিরা",
+      icon: UserCheck,
+      sub: [
+        {
+          name: "উপস্থিতি রিপোর্ট",
+          href: "/superadmin/attendance/report",
+          icon: ClipboardList,
+        },
+        {
+          name: "ম্যানুয়াল হাজিরা",
+          href: "/superadmin/attendance/manual",
           icon: UserCheck,
-          sub: [
-            {
-              name: "উপস্থিতি রিপোর্ট",
-              href: "/superadmin/attendance/report",
-              icon: ClipboardList,
-            },
-            {
-              name: "ম্যানুয়াল হাজিরা",
-              href: "/superadmin/attendance/manual",
-              icon: UserCheck,
-            },
-            {
-              // শিক্ষক প্রোফাইল থেকে সরানো হয়েছে
-              name: "শিফট বরাদ্দ",
-              href: "/superadmin/teacher/assignshift",
-              icon: Clock3,
-            },
-            {
-              name: "শিফট",
-              href: "/superadmin/attendance/shift",
-              icon: Clock3,
-            },
-          ],
         },
         {
-          name: "ছুটি",
+          // শিক্ষক প্রোফাইল থেকে সরানো হয়েছে
+          name: "শিফট বরাদ্দ",
+          href: "/superadmin/teacher/assignshift",
+          icon: Clock3,
+        },
+        {
+          name: "শিফট",
+          href: "/superadmin/attendance/shift",
+          icon: Clock3,
+        },
+      ],
+    },
+    {
+      name: "হাজিরা ছুটি",
+      icon: CalendarClock,
+      sub: [
+        {
+          name: "ছুটির দিন",
+          href: "/superadmin/attendance/holiday",
+          icon: CalendarCheck,
+        },
+        {
+          name: "ছুটির আবেদন",
+          href: "/superadmin/attendance/leave",
           icon: CalendarClock,
-          sub: [
-            {
-              name: "ছুটির দিন",
-              href: "/superadmin/attendance/holiday",
-              icon: CalendarCheck,
-            },
-            {
-              name: "ছুটির আবেদন",
-              href: "/superadmin/attendance/leave",
-              icon: CalendarClock,
-            },
-            {
-              // শিক্ষক প্রোফাইল থেকে সরানো হয়েছে
-              // TODO: route আলাদা করুন (এখন responsibilitydashboard)
-              name: "ছুটি",
-              href: "/superadmin/teacher/responsibilitydashboard",
-              icon: CalendarDays,
-            },
-          ],
+        },
+        {
+          // শিক্ষক প্রোফাইল থেকে সরানো হয়েছে
+          // TODO: route আলাদা করুন (এখন responsibilitydashboard)
+          name: "ছুটি",
+          href: "/superadmin/teacher/responsibilitydashboard",
+          icon: CalendarDays,
         },
       ],
     },
 
     // =====================================================
-    // ৭. ওয়েবসাইট ও ডকুমেন্টস
+    // ৫. ওয়েবসাইট ও ডকুমেন্টস
     // =====================================================
     {
       name: "ওয়েবসাইট",
@@ -1248,7 +1094,7 @@ export const menus: Record<string, MenuItem[]> = {
     },
 
     // =====================================================
-    // ৮. যোগাযোগ (SMS)
+    // ৬. যোগাযোগ (SMS)
     // =====================================================
     {
       name: "SMS Services",
@@ -1268,7 +1114,7 @@ export const menus: Record<string, MenuItem[]> = {
     },
 
     // =====================================================
-    // ৯. অন্যান্য ব্যবস্থাপনা
+    // ৭. অন্যান্য ব্যবস্থাপনা
     // =====================================================
     {
       name: "ঋণ ব্যবস্থাপনা",
@@ -1277,7 +1123,7 @@ export const menus: Record<string, MenuItem[]> = {
     },
 
     // =====================================================
-    // ১০. সিস্টেম (ব্যবহারকারী + সুরক্ষিত সংশোধন + পাসওয়ার্ড)
+    // ৮. সিস্টেম (ব্যবহারকারী + সুরক্ষিত সংশোধন + পাসওয়ার্ড)
     // =====================================================
     {
       name: "ব্যবহারকারী",
